@@ -6,9 +6,12 @@
         <img src="./assets/logo.png">
         <div class="head-nav">
           <ul class="nav-list">
-            <li>{{username}}</li>
-            <li v-show="username==''?false:true" class="nav-pile" >|</li>
-            <li v-if="username==''?false:true" @click="logout">退出</li>
+
+            <template v-if="username">
+              <li>{{username}}</li>
+              <li  class="nav-pile" >|</li>
+              <li @click="logout">退出</li>
+            </template>
             <li @click="login" v-else>登录</li>
             <li class="nav-pile">|</li>
             <li>注册</li>
@@ -24,7 +27,7 @@
       <Logform :Show="Show"  @has-login="hasLogin"></Logform>
     
     </BaseDialog>
-
+    <router-view></router-view>
   </div>
 </template>
 
@@ -51,7 +54,6 @@ export default {
   methods:{
     login(){
         this.Show.show=true;
-        this.$cookie.log();
 
     },
     // 子组件给父组件传入的登录成功的用户名
@@ -60,9 +62,7 @@ export default {
       if(username){
         this.username=username;
         //获取到用户名以后 马上存入缓存
-        this.$cookie.setCookie({
-          username:this.username
-        })
+        this.$cookie.setCookie({username})
 
       }
 
@@ -72,14 +72,16 @@ export default {
       //用户名变空
         this.username=""
       //session也清空
-      $this.$cookie.deleteCookie(this.username)
+      this.$cookie.deleteCookie("username")
 
     }
 
   },
   mounted(){
     // 页面刷新后获取session数据
-    username=this.$cookie.getCookie("username")
+    let username= this.$cookie.getCookie(document.cookie,"username")
+          this.username=username
+
 
   }
   

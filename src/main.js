@@ -10,7 +10,6 @@ import Cookie from "../static/cookie"
 Vue.prototype.$axios=Axios;
 // 把接口地址的js绑定给vue对象的原型
 Vue.prototype.$apiUrl=ApiUrl;
-
 Vue.prototype.$cookie=Cookie;
 
 

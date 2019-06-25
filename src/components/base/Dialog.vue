@@ -30,7 +30,6 @@ export default {
     methods:{
         close(){
           this.Show.show=false;
-          console.log(this.Show);
           
         }
     }
