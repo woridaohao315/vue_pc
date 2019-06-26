@@ -3,12 +3,12 @@
     <div class="index-left">
       <div class="index-left-block">
         <h2>全部产品</h2>
-        <div>
-          <h3></h3>
+        <div v-for="(item,key,index) in products" :class="{hr:key<Object.keys(item).length}">
+          <h3>{{item.title}}</h3>
           <ul>
-            <li>
-              <a href="#"></a>
-              <span class="hot-tag">HOT</span>
+            <li v-for="k in item.list">
+              <a href="k.url">{{k.name}}</a>
+              <span v-show="k.hot" class="hot-tag">HOT</span>
             </li>
           </ul>
         </div>
@@ -16,35 +16,107 @@
       <div class="index-left-block lastest-news">
         <h2>最新消息</h2>
         <ul>
-          <li>
-            <a href="" class="new-item"></a>
+          <li v-for="n in news">
+            <a href="n.url" class="new-item">{{n.title}}</a>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="index-right">
+      <Slide :slides="slides"></Slide>
+
+      <div class="index-board-list">
+
+        <!-- index是奇数的时候 启用 line-last类 -->
+        <div class="index-board-item" v-for="(item,index) in borders" :class="[{'line-last':index%2!=0},'index-board-'+item.id]">
+          <div class="index-board-item-inner" >
+            <h2>{{item.title}}</h2>
+            <p>{{item.description}}</p>
+            <div class="index-board-button">
+              <router-link class="button" to="/">立即购买</router-link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Slide from "../Slide"
 export default {
 
   data() {
     return {
       // 全部产品的变量
-      products: "",
+      products: {},
+      news: [],
+      slides: [],
+      borders: []
 
     }
+  },
+  components: {
+    Slide,
   },
   methods: {
     // 获取全部产品接口方法
     getAllProductList() {
+      this.$axios({
+        url: this.$apiUrl.index.index
+      }).then(res => {
+        this.products = res.data
+      })
+        .catch(err => {
+          if (err) throw err
+        })
+    },
+    getNews() {
+      this.$axios({
+        url: this.$apiUrl.index.newList
+      })
+        .then(res => {
+          this.news = res.data.data
 
+        })
+        .catch(err => {
+          if (err) throw err
+        })
+    },
+    getSlide() {
+      this.$axios({
+        url: this.$apiUrl.index.slides
+      })
+        .then(res => {
+          this.slides = res.data.data
+
+        })
+        .catch(err => {
+          if (err) throw err
+        })
+    },
+    getBoardList() {
+      this.$axios({
+        url: this.$apiUrl.index.boardList
+      })
+        .then(res => {
+          console.log(res.data.data);
+          this.borders = res.data.data
+        })
+        .catch(err => {
+          if (err) throw err
+        })
     }
+
 
 
   },
   mounted() {
-
+    this.getAllProductList();
+    this.getNews(),
+    this.getSlide(),
+    this.getBoardList()
   }
 
 
