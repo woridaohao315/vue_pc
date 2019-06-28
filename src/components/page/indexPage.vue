@@ -33,10 +33,15 @@
           <div class="index-board-item-inner" >
             <h2>{{item.title}}</h2>
             <p>{{item.description}}</p>
-            <div class="index-board-button">
-              <!-- 点击跳转到下一个页面 的特定组件 并且图片变成跟那个选定值一样 -->
-              <router-link class="button" :to="{name:item.toKey,params:{aindex:item.toKey}}">立即购买</router-link>
-            </div>
+			            <div class="index-board-button">
+                    <!-- router-link标签要想绑定js原生事件
+                      那么必须加事件修饰符 native  否则事件不生效
+                       -->
+			              <router-link class="button"
+                      @click.native="jump(index)"
+			              	 :to="{name:item.toKey,params:{oIndex:index}}">立即购买</router-link>
+			              	 
+			            </div>
           </div>
         </div>
       </div>
@@ -102,12 +107,19 @@ export default {
         url: this.$apiUrl.index.boardList
       })
         .then(res => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           this.borders = res.data.data
         })
         .catch(err => {
           if (err) throw err
         })
+    },
+    jump(index){
+        // alert("1");
+        sessionStorage.setItem("oIndex",index)
+        // console.log(sessionStorage.getItem("oIndex"));
+        
+        
     }
 
 

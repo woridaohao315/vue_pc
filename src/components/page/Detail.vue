@@ -4,17 +4,10 @@
       <div class="product-board">
         <img v-if="products" :src="products[currentPath.count].icon">
         <ul>
-          <router-link 
-          v-for="(item,index) in products" 
-          :key="index" 
-          active-class="active" 
-          tag="li" 
-          :to="item.path" 
-          replace 
-          @click.native="change(index)">
+          <router-link v-for="(item,index) in products" :key="index" active-class="active" tag="li" :to="item.path" replace @click.native="change(index)">
 
             {{item.name}}
-          
+
           </router-link>
         </ul>
       </div>
@@ -30,41 +23,51 @@
 
 <script>
 export default {
-    data(){
-        return{
-            products:"",
-            currentPath:{
-                count:0
-            }
-        }
-    },
-    methods:{
-        change(index){
-            console.log(index);
-        },
-        getProducts(){
-            this.$axios.get(this.$apiUrl.detail.products)
-            .then(res=>{
-                console.log(res.data);
-                this.products=res.data;
-            })
-            .catch(err=>{
-                if(err) throw err;
-            })
-        },
-
-
-    },
-    mounted(){
-        this.getProducts();
+  data() {
+    return {
+      products: "",
+      currentPath: {
+        count: 0
+      },
     }
+  },
+  methods: {
+    change(index) {
+      // console.log(index);
+      this.currentPath.count = index;
+                  sessionStorage.setItem("oIndex",index);
+    },
+    getProducts() {
+      this.$axios.get(this.$apiUrl.detail.products)
+        .then(res => {
+          // console.log(res.data);
+          this.products = res.data;
+
+        })
+        .catch(err => {
+          if (err) throw err;
+        })
+    },
+
+
+  },
+  mounted() {
+    this.getProducts();
+  },
+  activited() {
+    if (this.$route.params.oIndex) {
+      this.currentPath.count = this.$route.params.oIndex;
+    } else if (sessionStorage.getItem("oIndex")) {
+      this.currentPath.count = sessionStorage.getItem("oIndex")
+    }
+
+  }
+
 
 }
 </script>
 
 <style>
-
-
 .detail-wrap {
   width: 1200px;
   margin: 0 auto;
@@ -124,12 +127,12 @@ export default {
   padding-bottom: 20px;
 }
 .sales-board-line-left {
-    display: inline-block;
-    width: 100px;
+  display: inline-block;
+  width: 100px;
 }
 .sales-board-line-right {
-    display: inline-block;
-    width: 75%;
+  display: inline-block;
+  width: 75%;
 }
 .sales-board-des {
   border-top: 20px solid #f0f2f5;
@@ -159,8 +162,7 @@ export default {
   color: #fff;
 }
 .sales-board-table td {
-    border: 1px solid #f0f2f5;
-    padding: 15px;
+  border: 1px solid #f0f2f5;
+  padding: 15px;
 }
-
 </style>
