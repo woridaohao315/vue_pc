@@ -29,22 +29,22 @@ export default new Router({
         children:[
           {
             path: "/detail/count",
-            name:"Count",
+            name:"count",
             component:Count
           }, 
           {
             path: "/detail/analysis",
-            name: "Analysis",
+            name: "analysis",
             component: Analysis
           }, 
           {
             path: "/detail/forecast",
-            name: "Forecast",
+            name: "forecast",
             component: Forecast
           }, 
           {
             path: "/detail/publish",
-            name: "Publish",
+            name: "publish",
             component: Publish
           },
           

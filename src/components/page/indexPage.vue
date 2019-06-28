@@ -35,7 +35,7 @@
             <p>{{item.description}}</p>
             <div class="index-board-button">
               <!-- 点击跳转到下一个页面 的特定组件 并且图片变成跟那个选定值一样 -->
-              <router-link class="button" :to="{name:item.toKey,}">立即购买</router-link>
+              <router-link class="button" :to="{name:item.toKey,params:{aindex:item.toKey}}">立即购买</router-link>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       // 全部产品的变量
-      products: {},
+      products: "",
       news: [],
       slides: [],
       borders: []
