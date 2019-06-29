@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     change(index) {
-      // console.log(index);
+      // console.log(index);      
       this.currentPath.count = index;
       sessionStorage.setItem("oIndex", index);
       // console.log(sessionStorage.getItem("oIndex"));
@@ -58,9 +58,9 @@ export default {
   },
   //问题 activated里面的代码不执行
   activated() {
-    console.log("activated执行了");
+    // alert("activated执行了");
     
-        if (this.$route.params.oIndex != "undefined") {
+        if (this.$route.params.oIndex != undefined) {
       this.currentPath.count = this.$route.params.oIndex;
     } else if (sessionStorage.getItem("oIndex")) {
       this.currentPath.count = sessionStorage.getItem("oIndex")

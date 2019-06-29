@@ -27,7 +27,13 @@
       <Logform :Show="Show"  @has-login="hasLogin"></Logform>
     
     </BaseDialog>
-    <router-view></router-view>
+ <div class="container"> 
+        	<!--vue2.0提供了一个keep-alive组件,用来缓存组件,避免多次加载相应的组件,减少性能消耗-->
+			<keep-alive>   
+		  	<router-view></router-view>
+		  </keep-alive>
+    </div> 
+  </div>
   </div>
 </template>
 

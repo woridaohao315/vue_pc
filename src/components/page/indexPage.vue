@@ -115,7 +115,6 @@ export default {
         })
     },
     jump(index){
-        // alert("1");
         sessionStorage.setItem("oIndex",index)
         // console.log(sessionStorage.getItem("oIndex"));
         

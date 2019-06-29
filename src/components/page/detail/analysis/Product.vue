@@ -37,7 +37,7 @@ export default {
             
         },
         checkActive(index){
-            return this.newArr[index].value(index)!=-1
+            // return this.newArr[index].value(index)!=-1
             // console.log(this.newArr);
             
         }
