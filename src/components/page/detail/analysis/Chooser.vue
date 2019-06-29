@@ -26,6 +26,7 @@ export default {
     methods:{
         chosenSelection(index){
             this.nowIndex=index
+            this.$emit("on-change",this.periodList[this.nowIndex].label)
         }
     }
 }

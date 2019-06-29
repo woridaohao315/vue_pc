@@ -26,15 +26,15 @@ export default {
         if(this.counter.number<1){
             this.counter.number=1
         }
-        this.$emit("onChange",this.counter.number)
+        this.$emit("on-change",this.counter.number)
     },
     plus() {
         this.counter.number++
         if(this.counter.number>10){
             this.counter.number=10
         }
-        this.$emit("onChange",this.counter.number)
-
+        this.$emit("on-change",this.counter.number)
+        
     }
   }
 }

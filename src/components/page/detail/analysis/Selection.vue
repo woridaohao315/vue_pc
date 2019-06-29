@@ -27,7 +27,7 @@ methods:{
     chooseSelection(index){
         this.nowIndex=index;
         this.isDrop=false;
-        this.$emit("buyTypes",this.nowIndex);
+        this.$emit("on-change",this.buyTypes[this.nowIndex].label);
     },
     toggleDrop(){
         this.isDrop=!this.isDrop
