@@ -23,7 +23,7 @@ export default new Router({
       },
       {
         path:"/detail",
-            redirect: "/detail/count",
+        redirect: "/detail/count",
         name:"Detail",
         component:Detail,
         children:[

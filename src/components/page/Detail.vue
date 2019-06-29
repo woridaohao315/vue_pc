@@ -35,7 +35,9 @@ export default {
     change(index) {
       // console.log(index);
       this.currentPath.count = index;
-                  sessionStorage.setItem("oIndex",index);
+      sessionStorage.setItem("oIndex", index);
+      // console.log(sessionStorage.getItem("oIndex"));
+      
     },
     getProducts() {
       this.$axios.get(this.$apiUrl.detail.products)
@@ -54,8 +56,11 @@ export default {
   mounted() {
     this.getProducts();
   },
-  activited() {
-    if (this.$route.params.oIndex) {
+  //问题 activated里面的代码不执行
+  activated() {
+    console.log("activated执行了");
+    
+        if (this.$route.params.oIndex != "undefined") {
       this.currentPath.count = this.$route.params.oIndex;
     } else if (sessionStorage.getItem("oIndex")) {
       this.currentPath.count = sessionStorage.getItem("oIndex")
