@@ -75,7 +75,7 @@
             </tr>
           </table>
           <h3 class="buy-dialog-title">请选择银行</h3>
-          <!-- <BankChooser :banks="banks" @on-change="getChange('bank',$event)"></BankChooser> -->
+          <BankChooser :banks="banks" @on-change="getChange('bank',$event)"></BankChooser>
           <div class="button buy-dialog-btn" @click="confirmBuy">
             确认购买
           </div>
@@ -84,6 +84,28 @@
       </BaseDialog>
 
     </div>
+
+    <div class="sales-board-des">
+	        <h2>产品说明</h2>
+	        <p>网站访问统计分析报告的基础数据源于网站流量统计信息，但其价值远高于原始数据资料。专业的网站访问统计分析报告对网络营销的价值，正如专业的财务分析报告对企业经营策略的价值。</p>
+	
+	        <h3>用户行为指标</h3>
+	        <ul>
+	          <li>用户行为指标主要反映用户是如何来到网站的、在网站上停留了多长时间、访问了哪些页面等，主要的统计指标包括：</li>
+	          <li>用户在网站的停留时间；</li>
+	          <li>用户来源网站（也叫“引导网站”）；</li>
+	          <li>用户所使用的搜索引擎及其关键词；</li>
+	          <li>在不同时段的用户访问量情况等。</li>
+	        </ul>
+	        <h3>浏览网站方式</h3>
+	        <ul>
+	          <li>用户上网设备类型</li>
+	          <li>用户浏览器的名称和版本</li>
+	          <li>访问者电脑分辨率显示模式</li>
+	          <li>用户所使用的操作系统名称和版本</li>
+	          <li>用户所在地理区域分布状况等</li>
+	        </ul>
+    	</div>
 
   </div>
 
@@ -94,7 +116,9 @@ import Counter from "./analysis/Counter";
 import Selection from "./analysis/Selection";
 import Chooser from "./analysis/Chooser";
 import Product from "./analysis/Product";
+import BankChooser from "./analysis/BankChooser";
 import BaseDialog from "../../base/Dialog";
+
 
 
 export default {
@@ -121,20 +145,31 @@ export default {
     }
   },
   components: {
-    Counter, Selection, Chooser, Product, BaseDialog
+    Counter, Selection, Chooser, Product, BaseDialog,BankChooser
   },
   methods: {
     confirmBuy() {
-
+      this.Show.show=false;
+      console.log(this.$data);
+      this.$router.push({
+        name:"OrderList",
+        params:{
+          "buyNum":this.buyNum,
+          "buyType":this.buyType,
+          "endTime":this.endTime,
+          "versions":this.versions
+        }
+      })
+      
     },
     getChange(attr,val) {
         this[attr]=val
     },
     showPayDialog() {
       this.Show.show = true
-      console.log("购买数量:"+this.buyNum,"购买类型:"+this.buyType,"时间:"+this.endTime,"版本选择:"+this.versions);
+      // console.log("购买数量:"+this.buyNum,"购买类型:"+this.buyType,"时间:"+this.endTime,"版本选择:"+this.versions);
       // console.log(this.$data);
-      //TODO 1.获取总价 2.渲染出来银行组件
+      //1.获取总价 2.渲染出来银行组件 3.给服务器传客户选择的参数
       this.$axios.get(this.$apiUrl.detail.getprice)
       .then(res=>{
         this.price=res.data.amount
@@ -142,6 +177,20 @@ export default {
       .catch(err => {
       if (err) throw err
       })
+
+      //给服务器传参
+      let params=new URLSearchParams()
+      params.append("buyNum",this.buyNum);
+      params.append("buyType",this.buyType);
+      params.append("endTime",this.endTime);
+      params.append("versions",this.versions);
+      //然后用post方法传就行 这里没有接口就先不传了
+
+
+
+
+
+
       
     },
     getBuytypes() {
@@ -180,6 +229,17 @@ export default {
         .catch(err => {
           if (err) throw err
         })
+    },
+    getBanks(){
+      this.$axios.get(this.$apiUrl.detail.banks)
+      .then(res=>{
+        this.banks=res.data
+
+        this.bank=res.data[0].label
+      })
+      .catch(err => {
+      if (err) throw err
+      })
     }
 
   },
@@ -187,6 +247,7 @@ export default {
     this.getBuytypes();
     this.getPeriodList();
     this.getVersionList();
+    this.getBanks();
 
   }
 

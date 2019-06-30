@@ -6,20 +6,27 @@ Vue.use(Router)
 
 import IndexPage from "../components/page/indexPage";
 import Detail from "../components/page/Detail";
+import OrderList from "../components/page/OrderList";
 import Count from "../components/page/detail/Count";
 import Analysis from "../components/page/detail/Analysis";
 import Forecast from "../components/page/detail/Forecast";
 import Publish from "../components/page/detail/Publish";
 
 
+
 export default new Router({
   // 不使用哈希
-  mode: "history",
+  // mode: "history",
   routes: [
       {
         path:"/",
         name: "IndexPage",
         component: IndexPage
+      },
+      {
+        path:"/orderlist",
+        name:"OrderList",
+        component:OrderList
       },
       {
         path:"/detail",

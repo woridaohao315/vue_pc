@@ -17,6 +17,8 @@ export default {
     banks: "https://easy-mock.com/mock/5c4bb857a4192120796cee8b/vuepc/banks" //获取银行信息
   },
   orderlist: {
-    getOrderList: 'https://easy-mock.com/mock/5c4bb857a4192120796cee8b/vuepc/getOrderList' //获取订单列表接口
+    getOrderList: 'https://easy-mock.com/mock/5c4bb857a4192120796cee8b/vuepc/getOrderList', //获取订单列表接口
+    orderProducts: "https://www.easy-mock.com/mock/5d18497ca35767430eaf99d2/orderProducts" //订单产品类型列表
+
   }
 }

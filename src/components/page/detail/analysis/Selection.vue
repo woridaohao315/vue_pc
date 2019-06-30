@@ -16,7 +16,7 @@
 <script>
 export default {
     props:["buyTypes"],
-data(){
+data(){  
     return{
         isDrop:false,
         nowIndex:0
